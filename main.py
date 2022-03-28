@@ -7,7 +7,7 @@ def initialize_translation():
     print_supported_languages()
     print("Type the number of your language:")
     original_number = int(input())
-    print("Type the number of language you want to translate to:")
+    print("Type the number of a language you want to translate to or '0' to translate to all languages:")
     target_number = int(input())
     print("Type the word you want to translate:")
     word = input()

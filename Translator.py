@@ -45,12 +45,8 @@ def get_content_page(original, target, word):
     return response.content
 
 
-def print_translations(original_number, target_number, word):
-    original = supported_languages[original_number - 1].lower()
-    target = supported_languages[target_number - 1].lower()
-    content = get_content_page(original, target, word)
-    soup = BeautifulSoup(content, 'html.parser')
-    translation_links = soup.find_all('a', {
+def get_translations(_soup):
+    translation_links = _soup.find_all('a', {
         'class': ['translation', 'dict'],
     })
     translations = []
@@ -58,29 +54,86 @@ def print_translations(original_number, target_number, word):
         to_add = link.text.strip()
         if to_add and to_add != "Translation":
             translations.append(to_add)
-    sources = soup.find_all('div', {'class': 'src'})
+    return translations
+
+
+def get_source_sentences(_soup):
+    sources = _soup.find_all('div', {'class': 'src'})
     source_sentences = []
     for s in sources:
         sentence = s.text.strip()
         if sentence:
             source_sentences.append(sentence)
-    targets = soup.find_all('div', {'class': 'trg'})
+    return source_sentences
+
+
+def get_target_sentences(_soup):
+    targets = _soup.find_all('div', {'class': 'trg'})
     target_sentences = []
     for t in targets:
         t_sentence = t.text.strip()
         if t_sentence:
             target_sentences.append(t_sentence)
+    return target_sentences
+
+
+def get_result_sentences(sources, targets):
     result_sentences = []
-    for i in range(0, len(source_sentences)):
-        result_sentences.append(source_sentences[i])
-        result_sentences.append(target_sentences[i])
+    for i in range(0, len(sources)):
+        result_sentences.append(sources[i])
+        result_sentences.append(targets[i])
+    return result_sentences
+
+
+def print_result(target_language, translations, result_sentences, is_file_created, word):
+    mode = "a" if is_file_created else "w"
+    with open(f"{word}.txt", mode) as f:
+        translation_phrase = f"\n{target_language.capitalize()} Translations:"
+        print(translation_phrase)
+        translation_phrase = translation_phrase if is_file_created else translation_phrase[1:]
+        f.write(translation_phrase + "\n")
+        for translation in translations:
+            print(translation)
+            f.write(translation + "\n")
+        example_phrase = f"\n{target_language} Examples:"
+        print(example_phrase)
+        f.write(example_phrase + "\n")
+        for i in range(0, len(result_sentences)):
+            if i > 0 and i % 2 == 0:
+                to_print = f"\n{result_sentences[i]}"
+                print(to_print)
+                f.write(to_print + "\n")
+            else:
+                print(result_sentences[i])
+                f.write(result_sentences[i] + "\n")
+
+
+def print_single_language(page_content, target, is_file_created, word):
+    soup = BeautifulSoup(page_content, 'html.parser')
+
+    translations = get_translations(soup)
+    source_sentences = get_source_sentences(soup)
+    target_sentences = get_target_sentences(soup)
+
+    result_sentences = get_result_sentences(source_sentences, target_sentences)
+
     target_language = target.capitalize()
-    print(f"\n{target_language} Translations:")
-    for translation in translations:
-        print(translation)
-    print(f"\n{target_language} Examples:")
-    for i in range(0, len(result_sentences)):
-        if i > 0 and i % 2 == 0:
-            print(f"\n{result_sentences[i]}")
-        else:
-            print(result_sentences[i])
+    print_result(target_language, translations[0:1], result_sentences[0:2], is_file_created, word)
+
+
+def print_translations(original_number, target_number, word):
+    original = supported_languages[original_number - 1].lower()
+    if target_number != 0:
+        target = supported_languages[target_number - 1].lower()
+        content = get_content_page(original, target, word)
+        print_single_language(content, target, False, word)
+    else:
+        index = 0
+        for lang in supported_languages:
+            if lang.lower() != original:
+                content = get_content_page(original, lang.lower(), word)
+                print_single_language(content, lang.lower(), index != 0, word)
+                index += 1
+
+
+

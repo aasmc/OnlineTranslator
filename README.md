@@ -168,3 +168,139 @@ Además, la entrega rápida. hola Laura.
 L: Well, hello, my dear secretary.:
 A: Bien, hola, mi querida secretaria.
 ```
+
+## Stage 5
+### Description
+
+Perfect! Your program already became a convenient tool. There are just a couple of stages left. Your translation app is flexible enough to be appreciated by many people worldwide, so let's make it even better: add the feature of translating the word to all the languages at once, and also save the search results to a text file so that the user could read the translations later.
+### Objectives
+
+Add the following functionality to your program:
+
+- Before taking an input specifying the target language, output the message Type the number of a language you want to translate to or '0' to translate to all languages:
+- If the user inputs 0 as the target language, translate the word to all available languages.
+- Output results to the terminal, as in the previous stage. At this stage, it's enough to print just one translation and one sentence pair per target language.
+- Save results of the search to a file named word.txt, where word is the word that was being translated.
+
+### Example
+
+The greater-than symbol followed by a space (> ) represents the user input. Note that it's not part of the input.
+```text
+Hello, welcome to the translator. Translator supports: 
+1. Arabic
+2. German
+3. English
+4. Spanish
+5. French
+6. Hebrew
+7. Japanese
+8. Dutch
+9. Polish
+10. Portuguese
+11. Romanian
+12. Russian
+13. Turkish
+Type the number of your language:
+> 3
+Type the number of a language you want to translate to or '0' to translate to all languages:
+> 0
+Type the word you want to translate:
+> hello
+```
+This will result in the following output and a file called hello.txt with the same content:
+```text
+Arabic Translations:
+مرحبا
+
+Arabic Example:
+Well, hello, old-school racist.:
+حسنا، مرحبا يا تلميذة المدرسة العنصريّة - الأمر يسري بدمهم!
+
+
+German Translations:
+hallo
+
+German Example:
+We agreedellen wolf is innocent. hello.:
+Wir waren einverstanden damit, dass Wolf unschuldig ist. Hallo.
+
+
+Spanish Translations:
+hola
+
+Spanish Example:
+Well, hello, Miss Anchor-liar.:
+Bien, hola, señorita presentadora de mentiras.
+
+
+French Translations:
+bonjour
+
+French Example:
+Well, hello, freedom fighters.:
+Et bien, bonjour combattants de la liberté.
+
+
+Hebrew Translations:
+שלום
+
+Hebrew Example:
+Is "hello" too bland?:
+האם "שלום" יותר מדי מנומס?
+
+
+Japanese Translations:
+こんにちは
+
+Japanese Example:
+The little boy said hello to me.:
+小さな男の子が私にこんにちはと言った。
+
+
+Dutch Translations:
+dag
+
+Dutch Example:
+That was kind of our funny hello.:
+Dat vond we een grappige begroeting.
+
+
+Polish Translations:
+cześć
+
+Polish Example:
+I guess it's... goodbye car insurance, hello city bus.:
+I domyślam się, że to jest... do widzenia ubezpieczenie samochodu, cześć autobus miejski.
+
+
+Portuguese Translations:
+olá
+
+Portuguese Example:
+That was my last kiss hello.:
+Pois eu garanto que aquele foi o meu último beijo de olá.
+
+
+Romanian Translations:
+salut
+
+Romanian Example:
+Well, hello, professor Culbertson.:
+Ei bine, salut, profesor universitar Culbertson.
+
+
+Russian Translations:
+привет
+
+Russian Example:
+Why, hello, there, Admiral.:
+А, Адмирал, привет, что здесь делаешь.
+
+
+Turkish Translations:
+selam
+
+Turkish Example:
+So now little Sabina says hello.:
+Velhasıl minik Sabina size selam söylüyor.
+```
