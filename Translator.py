@@ -6,13 +6,33 @@ language_map = {
     "fr": "french"
 }
 
+supported_languages = [
+    "Arabic",
+    "German",
+    "English",
+    "Spanish",
+    "French",
+    "Hebrew",
+    "Japanese",
+    "Dutch",
+    "Polish",
+    "Portuguese",
+    "Romanian",
+    "Russian",
+    "Turkish"
+]
+
+
+def print_supported_languages():
+    for i in range(0, len(supported_languages)):
+        print(f"{i + 1}. {supported_languages[i]}")
+
+
 base_url = "https://context.reverso.net/translation/"
 
 
 def form_url(original, target, word):
-    from_language = language_map[original]
-    to_language = language_map[target]
-    url = f"{base_url}{from_language}-{to_language}/{word}"
+    url = f"{base_url}{original}-{target}/{word}"
     return url
 
 
@@ -22,11 +42,12 @@ def get_content_page(original, target, word):
     response = requests.get(url, headers=headers)
     while not response.status_code == 200:
         response = requests.get(url, headers=headers)
-    print("200 OK")
     return response.content
 
 
-def print_translations(original, target, word):
+def print_translations(original_number, target_number, word):
+    original = supported_languages[original_number - 1].lower()
+    target = supported_languages[target_number - 1].lower()
     content = get_content_page(original, target, word)
     soup = BeautifulSoup(content, 'html.parser')
     translation_links = soup.find_all('a', {
@@ -53,7 +74,7 @@ def print_translations(original, target, word):
     for i in range(0, len(source_sentences)):
         result_sentences.append(source_sentences[i])
         result_sentences.append(target_sentences[i])
-    target_language = language_map[target].capitalize()
+    target_language = target.capitalize()
     print(f"\n{target_language} Translations:")
     for translation in translations:
         print(translation)
@@ -63,4 +84,3 @@ def print_translations(original, target, word):
             print(f"\n{result_sentences[i]}")
         else:
             print(result_sentences[i])
-

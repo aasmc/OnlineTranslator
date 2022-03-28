@@ -1,17 +1,17 @@
 from Translator import print_translations
+from Translator import print_supported_languages
 
 
 def initialize_translation():
-    print(
-        'Type "en" if you want to translate from French into English, or "fr" if you want to translate from English '
-        'into French:')
-    target = input()
-    original = "en" if target == "fr" else "fr"
+    print("Hello, welcome to the translator. Translator supports:")
+    print_supported_languages()
+    print("Type the number of your language:")
+    original_number = int(input())
+    print("Type the number of language you want to translate to:")
+    target_number = int(input())
     print("Type the word you want to translate:")
     word = input()
-    output = f'You chose {target} as a language to translate "{word}.'
-    print(output)
-    print_translations(original, target, word)
+    print_translations(original_number, target_number, word)
 
 
 # Press the green button in the gutter to run the script.
