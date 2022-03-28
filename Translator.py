@@ -53,6 +53,14 @@ def print_translations(original, target, word):
     for i in range(0, len(source_sentences)):
         result_sentences.append(source_sentences[i])
         result_sentences.append(target_sentences[i])
-    print("Translations")
-    print(translations)
-    print(result_sentences)
+    target_language = language_map[target].capitalize()
+    print(f"\n{target_language} Translations:")
+    for translation in translations:
+        print(translation)
+    print(f"\n{target_language} Examples:")
+    for i in range(0, len(result_sentences)):
+        if i > 0 and i % 2 == 0:
+            print(f"\n{result_sentences[i]}")
+        else:
+            print(result_sentences[i])
+
