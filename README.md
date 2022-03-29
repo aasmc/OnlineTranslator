@@ -447,3 +447,38 @@ Turkish Example:
 So now little Sabina says hello.:
 Velhasıl minik Sabina size selam söylüyor.
 ```
+
+## Stage 7
+### Description
+
+Your program works as expected! However, there’s a problem you should always keep in mind: the user can always input something that will break your program.
+
+Up to this stage, we considered "perfect" inputs. But what if things go wrong? For example, you gave your program to someone who’s not familiar with the concept behind it. What if they try to translate to or from languages different from those you have in your code, or even start typing jabberwocky? Let's find some way to avoid this.
+
+All these situations are called exceptions because you didn’t expect them to happen, and now your program will have to handle them.
+### Objectives
+
+Add the following functionality:
+
+- If the user inputs a name of a language that isn't available in the program, print the line Sorry, the program doesn't support <language> and quit the program.
+- If the connection with the website isn't successful, print the line Something wrong with your internet connection
+- If the user inputs a word that's not present in ReversoContext, print the line Sorry, unable to find <word>
+
+### Examples
+
+The greater-than symbol followed by a space (> ) represents the user input. Note that it's not part of the input.
+
+```text
+> python translator.py english korean hello
+Sorry, the program doesn't support korean
+```
+
+```text
+> python translator.py english all hello
+Something wrong with your internet connection
+```
+
+```text
+> python translator.py english all brrrrrrrrrrr
+Sorry, unable to find brrrrrrrrrrr
+```

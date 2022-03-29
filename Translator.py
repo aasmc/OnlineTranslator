@@ -1,26 +1,25 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 language_map = {
     "en": "english",
     "fr": "french"
 }
 
 supported_languages = [
-    "Arabic",
-    "German",
-    "English",
-    "Spanish",
-    "French",
-    "Hebrew",
-    "Japanese",
-    "Dutch",
-    "Polish",
-    "Portuguese",
-    "Romanian",
-    "Russian",
-    "Turkish"
+    "arabic",
+    "german",
+    "english",
+    "spanish",
+    "french",
+    "hebrew",
+    "japanese",
+    "dutch",
+    "polish",
+    "portuguese",
+    "romanian",
+    "russian",
+    "turkish"
 ]
 
 
@@ -41,9 +40,7 @@ def get_content_page(original, target, word):
     url = form_url(original, target, word)
     headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(url, headers=headers)
-    while not response.status_code == 200:
-        response = requests.get(url, headers=headers)
-    return response.content
+    return response
 
 
 def get_translations(_soup):
@@ -115,24 +112,34 @@ def print_single_language(page_content, target, is_file_created, word):
     translations = get_translations(soup)
     source_sentences = get_source_sentences(soup)
     target_sentences = get_target_sentences(soup)
-
     result_sentences = get_result_sentences(source_sentences, target_sentences)
-
     target_language = target.capitalize()
     print_result(target_language, translations[0:1], result_sentences[0:2], is_file_created, word)
 
 
 def print_translations(original, target, word):
-    if target != "all":
-        content = get_content_page(original, target, word)
-        print_single_language(content, target, False, word)
+    if original not in supported_languages:
+        print(f"Sorry, the program doesn't support {original}")
+    elif target != "all" and target not in supported_languages:
+        print(f"Sorry, the program doesn't support {target}")
+    elif target != "all":
+        response = get_content_page(original, target, word)
+        if response.status_code == 200:
+            print_single_language(response.content, target, False, word)
+        elif response.status_code == 404:
+            print(f"Sorry, unable to find {word}")
+        else:
+            print("Something wrong with your internet connection")
     else:
         index = 0
         for lang in supported_languages:
-            if lang.lower() != original:
-                content = get_content_page(original, lang.lower(), word)
-                print_single_language(content, lang.lower(), index != 0, word)
+            if lang != original:
+                response = get_content_page(original, lang, word)
+                if response.status_code == 200:
+                    print_single_language(response.content, lang, index != 0, word)
+                elif response.status_code == 404:
+                    print(f"Sorry, unable to find {word}")
+                    break
+                else:
+                    print("Something wrong with your internet connection")
                 index += 1
-
-
-
