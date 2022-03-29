@@ -1,17 +1,14 @@
 from Translator import print_translations
-from Translator import print_supported_languages
+import sys
 
 
 def initialize_translation():
-    print("Hello, welcome to the translator. Translator supports:")
-    print_supported_languages()
-    print("Type the number of your language:")
-    original_number = int(input())
-    print("Type the number of a language you want to translate to or '0' to translate to all languages:")
-    target_number = int(input())
-    print("Type the word you want to translate:")
-    word = input()
-    print_translations(original_number, target_number, word)
+    args = sys.argv
+    original_lang = args[1].lower()
+    target_lang = args[2].lower()
+    word_to_translate = args[3].lower()
+
+    print_translations(original_lang, target_lang, word_to_translate)
 
 
 # Press the green button in the gutter to run the script.

@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 language_map = {
     "en": "english",
     "fr": "french"
@@ -121,10 +122,8 @@ def print_single_language(page_content, target, is_file_created, word):
     print_result(target_language, translations[0:1], result_sentences[0:2], is_file_created, word)
 
 
-def print_translations(original_number, target_number, word):
-    original = supported_languages[original_number - 1].lower()
-    if target_number != 0:
-        target = supported_languages[target_number - 1].lower()
+def print_translations(original, target, word):
+    if target != "all":
         content = get_content_page(original, target, word)
         print_single_language(content, target, False, word)
     else:
